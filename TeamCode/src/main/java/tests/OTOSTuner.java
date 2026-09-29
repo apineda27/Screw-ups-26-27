@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedro.procedures;
+package tests;
 
 import com.pedropathing.math.Pose;
 import com.pedropathing.revhub.localizers.OTOSConfig;
