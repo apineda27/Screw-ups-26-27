@@ -24,10 +24,10 @@ public class TuningConfig {
     // ---- Hardware -------------------------------------------------------
 
     /** Hardware configuration name of the motor (e.g. "shooter", "arm"). */
-    public static String MOTOR_NAME = "motor";
+    public static String MOTOR_NAME = "shooter";
 
     /** Hardware configuration name of the second motor for the dual-velocity tuner. */
-    public static String MOTOR_NAME_2 = "motor2";
+    public static String MOTOR_NAME_2 = "shooter2";
 
     /** Set true if positive power should produce a decreasing encoder reading. */
     public static boolean REVERSED = false;
