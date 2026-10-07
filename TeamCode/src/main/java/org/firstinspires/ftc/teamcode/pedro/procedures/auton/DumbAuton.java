@@ -13,6 +13,9 @@ import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 import com.pedropathing.ivy.Command;
 import com.pedropathing.ivy.Scheduler;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
@@ -21,6 +24,7 @@ import org.firstinspires.ftc.teamcode.pedro.procedures.pedroPathing.Constants;
 @Autonomous
 public class DumbAuton extends OpMode {
     private Follower follower;
+    private DcMotorEx intake;
     private final PoseFactory poseFactory = PoseFactory.degrees();
     private final Pose start = poseFactory.of(56, 9.5, 90);
     private final Pose score = poseFactory.of(56, 15, 90);
@@ -30,10 +34,17 @@ public class DumbAuton extends OpMode {
 
     private Path park() {
         return curve(start, control1, park);
+
+    }
+    private Command runIntake() {
+        return Command.build()
+                .setStart(() -> intake.setVelocity(ShooterConstants.targetTicksPerSec()))
+                .setEnd(end -> intake.setVelocity(0));
     }
     private Command autoRoutine() {
         return sequential(
                 follow(follower, park())
+
         );
     }
 
@@ -44,6 +55,12 @@ public class DumbAuton extends OpMode {
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
         follower.update();
+
+        DcMotorEx intake = hardwareMap.get(DcMotorEx.class, "intake");
+        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intake.setVelocityPIDFCoefficients(
+                ShooterConstants.kP, ShooterConstants.kI,
+                ShooterConstants.kD, ShooterConstants.kF);
     }
 
     @Override
@@ -56,5 +73,18 @@ public class DumbAuton extends OpMode {
     public void loop() {
         follower.update();
         Scheduler.execute();
+    }
+    public static class ShooterConstants {
+        public static final double kP = 0.0; // from the tuner telemetry
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kF = 0.0;
+
+        public static final double TICKS_PER_REV = 28.0; // same value you tuned with
+        public static final double TARGET_RPM = 1000;
+
+        public static double targetTicksPerSec() {
+            return (TARGET_RPM * TICKS_PER_REV) / 60.0;
+        }
     }
 }
