@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.pedro.procedures.pedroPathing.Constants;
 @Autonomous
 public class DumbAuton extends OpMode {
     private Follower follower;
-    private DcMotorEx intake;
+    /*private DcMotorEx intake;*/
     private final PoseFactory poseFactory = PoseFactory.degrees();
     private final Pose start = poseFactory.of(56, 9.5, 90);
     private final Pose score = poseFactory.of(56, 15, 90);
@@ -33,14 +33,14 @@ public class DumbAuton extends OpMode {
     private final Pose control2 = poseFactory.of(36, 60, 45);
 
     private Path park() {
-        return curve(start, control1, park);
+        return curve(start, control1, park).linear(start, park);
 
     }
-    private Command runIntake() {
+    /*private Command runIntake() {
         return Command.build()
                 .setStart(() -> intake.setVelocity(ShooterConstants.targetTicksPerSec()))
                 .setEnd(end -> intake.setVelocity(0));
-    }
+    }*/
     private Command autoRoutine() {
         return sequential(
                 follow(follower, park())
@@ -56,11 +56,11 @@ public class DumbAuton extends OpMode {
         follower.setPose(start);
         follower.update();
 
-        DcMotorEx intake = hardwareMap.get(DcMotorEx.class, "intake");
+        /*DcMotorEx intake = hardwareMap.get(DcMotorEx.class, "intake");
         intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intake.setVelocityPIDFCoefficients(
                 ShooterConstants.kP, ShooterConstants.kI,
-                ShooterConstants.kD, ShooterConstants.kF);
+                ShooterConstants.kD, ShooterConstants.kF);*/
     }
 
     @Override
@@ -74,7 +74,7 @@ public class DumbAuton extends OpMode {
         follower.update();
         Scheduler.execute();
     }
-    public static class ShooterConstants {
+    /*public static class ShooterConstants {
         public static final double kP = 0.0; // from the tuner telemetry
         public static final double kI = 0.0;
         public static final double kD = 0.0;
@@ -86,5 +86,5 @@ public class DumbAuton extends OpMode {
         public static double targetTicksPerSec() {
             return (TARGET_RPM * TICKS_PER_REV) / 60.0;
         }
+        }*/
     }
-}
