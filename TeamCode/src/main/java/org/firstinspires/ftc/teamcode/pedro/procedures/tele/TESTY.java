@@ -1,11 +1,9 @@
-package org.firstinspires.ftc.teamcode.pedro.procedures.flywheel;
+package org.firstinspires.ftc.teamcode.pedro.procedures.tele;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp
 public class TESTY extends LinearOpMode {
@@ -18,7 +16,7 @@ public class TESTY extends LinearOpMode {
         Fella.setDirection(DcMotorSimple.Direction.REVERSE);
         waitForStart();
         while (opModeIsActive()){
-            Fella.setVelocity(4000);
+            Fella.setVelocity(2000);
             telemetry.addData("stuff",Fella.getVelocity());
         }
     }
