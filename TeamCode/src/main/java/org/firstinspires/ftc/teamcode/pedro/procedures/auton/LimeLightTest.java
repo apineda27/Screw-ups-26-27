@@ -3,20 +3,22 @@ package org.firstinspires.ftc.teamcode.pedro.procedures.auton;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-
-public class limelight extends OpMode {
+@TeleOp
+public class LimeLightTest extends OpMode {
     private Limelight3A limelight;
     private IMU imu;
 
     @Override
     public void init() {
         limelight = hardwareMap.get(Limelight3A.class,"LimeLight");
-        limelight.pipelineSwitch(8);// not sure what this does
+        limelight.pipelineSwitch(2);// turns limelight on and off
         imu = hardwareMap.get(IMU.class,"imu");
         RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
@@ -38,6 +40,8 @@ public class limelight extends OpMode {
             telemetry.addData("Tx", llResult.getTx());
             telemetry.addData("Ty", llResult.getTy());
             telemetry.addData("Ta", llResult.getTa());
+            telemetry.addData("BotPose", botpose.toString());
+            telemetry.addData("Yaw", botpose.getOrientation().getYaw());
         }
     }
 }
