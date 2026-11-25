@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.pedropathing.follower.Follower;
 
 import org.firstinspires.ftc.teamcode.pedro.procedures.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedro.procedures.subsystems.auton.ParkPoses;
+import org.firstinspires.ftc.teamcode.pedro.procedures.subsystems.auton.Poses;
 
 import static com.pedropathing.api.Paths.*;
 import com.pedropathing.paths.Path;
@@ -18,7 +18,7 @@ import com.pedropathing.ivy.Command;
 public class AnotherParkAuton extends OpMode {
 
     private Follower follower;
-    private final ParkPoses p = new ParkPoses(false);
+    private final Poses p = new Poses(false);
 
     private Path park() {
         return line(p.startD,p.parkD).linear(p.startD, p.parkD);

@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.pedro.procedures.subsystems.auton;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 
-public class ParkPoses {
+public class Poses {
     public final Pose startU;
     public final Pose parkU;
     public final Pose parkCU;
     public final Pose startD;
     public final Pose parkD;
 
-    public ParkPoses(boolean mirror) {
+    public Poses(boolean mirror) {
         PoseFactory poseFactory = PoseFactory.degrees();
         if (mirror) {
             poseFactory = poseFactory.mirrorX(70.75).mirrorY(70.75);
