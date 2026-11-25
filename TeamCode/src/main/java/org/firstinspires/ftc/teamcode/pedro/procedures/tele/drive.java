@@ -10,13 +10,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp
 public class drive extends LinearOpMode {
+    private DcMotor frontLeft;
+    private DcMotor backLeft;
+    private DcMotor frontRight;
+    private DcMotor backRight;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
-        DcMotor frontLeft = hardwareMap.dcMotor.get("frontL");
-        DcMotor backLeft = hardwareMap.dcMotor.get("backL");
-        DcMotor frontRight = hardwareMap.dcMotor.get("frontR");
-        DcMotor backRight = hardwareMap.dcMotor.get("backR");
+        frontLeft = hardwareMap.get(DcMotor.class,"frontL");
+        backLeft = hardwareMap.get(DcMotor.class,"backL");
+        frontRight = hardwareMap.get(DcMotor.class,"frontR");
+        backRight = hardwareMap.get(DcMotor.class,"backR");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);

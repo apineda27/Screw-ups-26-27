@@ -8,6 +8,7 @@ import com.pedropathing.tuning.autotune.Tuner;
 import tests.ForesightTuner;
 import tests.MecanumTuner;
 import tests.PinpointTuner;
+import tests.Tests;
 
 public class Tuning {
     @Tuner
@@ -21,5 +22,9 @@ public class Tuning {
     @Tuner
     public static Procedure foresightTuner() {
         return new ForesightTuner((hardwareMap) -> new PinpointLocalizer(hardwareMap, Constants.localizerConfig), (hardwareMap) -> new Mecanum(hardwareMap, Constants.drivetrainConfig));
+    }
+    @Tuner
+    public static Procedure tests() {
+        return new Tests(hardwareMap -> new Mecanum(hardwareMap, Constants.drivetrainConfig), null, null);
     }
 }

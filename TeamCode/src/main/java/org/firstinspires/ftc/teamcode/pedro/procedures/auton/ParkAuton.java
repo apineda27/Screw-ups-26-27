@@ -1,41 +1,31 @@
 package org.firstinspires.ftc.teamcode.pedro.procedures.auton;
-import static com.pedropathing.api.Paths.line;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.pedropathing.follower.Follower;
+
+import org.firstinspires.ftc.teamcode.pedro.procedures.pedroPathing.Constants;
+import org.firstinspires.ftc.teamcode.pedro.procedures.subsystems.auton.ParkPoses;
+
+import static com.pedropathing.api.Paths.*;
+import com.pedropathing.paths.Path;
+import com.pedropathing.ivy.Scheduler;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
-
-import com.pedropathing.api.PoseFactory;
-import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
-import com.pedropathing.ivy.Scheduler;
-import com.pedropathing.math.Pose;
-import com.pedropathing.paths.Path;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.pedro.procedures.pedroPathing.Constants;
-
-@Autonomous(name = "Park Auton")
+@Autonomous(name = "RedUPark")
 public class ParkAuton extends OpMode {
 
     private Follower follower;
-    private final PoseFactory poseFactory = PoseFactory.degrees();
-    private final Pose start = poseFactory.of(56, 8, 90);
-    private final Pose waypoint = poseFactory.of(136, 34, 0);
-    private final Pose park = poseFactory.of(57, 38, 0);
+    private final ParkPoses p = new ParkPoses(false);
 
-    private Path toWaypoint() {
-        return line(start, waypoint).linear(start, waypoint);
+    private Path park() {
+        return curve(p.startU, p.parkCU, p.parkU).linear(p.startU, p.parkU);
     }
-
-    private Path toPark() {
-        return line(waypoint, park).linear(waypoint, park);
-    }
-
     private Command autoRoutine() {
         return sequential(
-                follow(follower, toWaypoint()),
-                follow(follower, toPark())
+                follow(follower, park())
         );
     }
 
@@ -44,7 +34,7 @@ public class ParkAuton extends OpMode {
         Scheduler.reset();
 
         follower = Constants.create(hardwareMap);
-        follower.setPose(start);
+        follower.setPose(p.startU);
         follower.update();
     }
 
